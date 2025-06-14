@@ -1,0 +1,101 @@
+# إعدادات GitHub Pages لتطبيق كلاشي PWA
+title: "كلاشي - السوق الإلكتروني الشامل"
+description: "سوق إلكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد - العراق"
+url: "https://krarar.github.io"
+baseurl: "/Clashy"
+
+# معلومات التطبيق
+lang: ar
+timezone: Asia/Baghdad
+encoding: utf-8
+
+# SEO
+author:
+  name: "كلاشي"
+  email: "info@clashy.iq"
+  twitter: "@clashy_iq"
+
+# Social Media
+social:
+  name: "كلاشي"
+  links:
+    - "https://github.com/krarar/Clashy"
+    - "https://wa.me/9647813798636"
+
+# PWA Settings
+webmaster_verifications:
+  google: ""
+  bing: ""
+
+# GitHub Pages Settings
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Include/Exclude
+include:
+  - manifest.json
+  - sw.js
+  - browserconfig.xml
+  - robots.txt
+  - sitemap.xml
+  - "*.html"
+
+exclude:
+  - README.md
+  - LICENSE
+  - .gitignore
+  - .github/
+  - node_modules/
+  - package*.json
+
+# Collections
+collections:
+  stores:
+    output: false
+  products:
+    output: false
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      lang: "ar"
+      dir: "rtl"
+
+# Build Settings
+markdown: kramdown
+highlighter: rouge
+sass:
+  style: compressed
+
+# GitHub Pages Specific
+github: [metadata]
+repository: krarar/Clashy
+
+# Performance
+compress_html:
+  clippings: all
+  comments: all
+  blanklines: false
+
+# Security Headers (via GitHub Pages)
+strict_transport_security: true
+content_security_policy: "default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; img-src 'self' data: https:; font-src 'self' https: data:;"
+
+# Analytics (يمكن إضافة Google Analytics لاحقاً)
+google_analytics: ""
+
+# PWA Specific
+pwa:
+  name: "كلاشي"
+  short_name: "كلاشي"
+  description: "السوق الإلكتروني الشامل"
+  theme_color: "#8B5CF6"
+  background_color: "#0F172A"
+  display: "standalone"
+  start_url: "/"
