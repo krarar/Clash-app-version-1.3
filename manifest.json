@@ -1,0 +1,133 @@
+{
+  "name": "كلاشي - السوق الإلكتروني الشامل",
+  "short_name": "كلاشي",
+  "description": "سوق إلكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد - العراق",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#8B5CF6",
+  "background_color": "#0F172A",
+  "categories": ["shopping", "business", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "المنتجات",
+      "short_name": "منتجات",
+      "description": "تصفح جميع المنتجات",
+      "url": "./index.html#products",
+      "icons": [
+        {
+          "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "المتاجر",
+      "short_name": "متاجر",
+      "description": "تصفح جميع المتاجر",
+      "url": "./index.html#stores",
+      "icons": [
+        {
+          "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "المفضلة",
+      "short_name": "مفضلة",
+      "description": "المنتجات المفضلة",
+      "url": "./index.html#favorites",
+      "icons": [
+        {
+          "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "سلة التسوق",
+      "short_name": "السلة",
+      "description": "سلة التسوق",
+      "url": "./index.html#cart",
+      "icons": [
+        {
+          "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+clashy",
+      "url": "./index.html?action=%s"
+    }
+  ]
+}
