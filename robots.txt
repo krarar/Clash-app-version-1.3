@@ -1,10 +1,20 @@
+# ===== robots.txt =====
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://krarar.github.io/Clashy/sitemap.xml
+# ملفات مهمة للـ PWA
+Allow: /Clashy/manifest.json
+Allow: /Clashy/sw.js
+Allow: /Clashy/offline.html
+Allow: /Clashy/browserconfig.xml
 
-# Files
+# الصفحات الرئيسية
+Allow: /Clashy/
+Allow: /Clashy/index.html
+Allow: /Clashy/alhajami.html
+Allow: /Clashy/Al%20Ghadeer%20Office.html
+
+# الموارد الثابتة
 Allow: /*.css$
 Allow: /*.js$
 Allow: /*.png$
@@ -18,18 +28,155 @@ Allow: /*.woff2$
 Allow: /*.ttf$
 Allow: /*.eot$
 
-# PWA Files
-Allow: /manifest.json
-Allow: /sw.js
-Allow: /browserconfig.xml
+# منع الوصول للملفات الحساسة
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /node_modules/
+Disallow: /_site/
+Disallow: /.sass-cache/
+Disallow: /.jekyll-cache/
+Disallow: /vendor/
 
-# Important Pages
-Allow: /index.html
-Allow: /alhajami.html
-Allow: /Al Ghadeer Office.html
+# خريطة الموقع
+Sitemap: https://krarar.github.io/Clashy/sitemap.xml
 
-# Crawl Delay (optional)
+# تأخير الزحف (ثانية واحدة)
 Crawl-delay: 1
 
-# Host
+# مضيف الموقع
 Host: https://krarar.github.io/Clashy/
+
+# ===== sitemap.xml =====
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- الصفحة الرئيسية -->
+  <url>
+    <loc>https://krarar.github.io/Clashy/</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <mobile:mobile/>
+    <xhtml:link 
+      rel="alternate" 
+      hreflang="ar" 
+      href="https://krarar.github.io/Clashy/" />
+    <image:image>
+      <image:loc>https://via.placeholder.com/1200x630/8B5CF6/white?text=كلاشي+-+السوق+الإلكتروني+الشامل</image:loc>
+      <image:title>كلاشي - السوق الإلكتروني الشامل</image:title>
+      <image:caption>تطبيق كلاشي PWA للتسوق الإلكتروني في العراق</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- صفحة index.html -->
+  <url>
+    <loc>https://krarar.github.io/Clashy/index.html</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- صفحة محلات الحجامي -->
+  <url>
+    <loc>https://krarar.github.io/Clashy/alhajami.html</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <mobile:mobile/>
+    <xhtml:link 
+      rel="alternate" 
+      hreflang="ar" 
+      href="https://krarar.github.io/Clashy/alhajami.html" />
+  </url>
+  
+  <!-- صفحة مكتب الغدير -->
+  <url>
+    <loc>https://krarar.github.io/Clashy/Al%20Ghadeer%20Office.html</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <mobile:mobile/>
+    <xhtml:link 
+      rel="alternate" 
+      hreflang="ar" 
+      href="https://krarar.github.io/Clashy/Al%20Ghadeer%20Office.html" />
+  </url>
+  
+  <!-- صفحة عدم الاتصال -->
+  <url>
+    <loc>https://krarar.github.io/Clashy/offline.html</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- أقسام التطبيق -->
+  <url>
+    <loc>https://krarar.github.io/Clashy/#products</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <url>
+    <loc>https://krarar.github.io/Clashy/#stores</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <url>
+    <loc>https://krarar.github.io/Clashy/#favorites</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <url>
+    <loc>https://krarar.github.io/Clashy/#cart</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- ملفات PWA -->
+  <url>
+    <loc>https://krarar.github.io/Clashy/manifest.json</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+</urlset>
+
+# ===== browserconfig.xml =====
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <square70x70logo src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 70 70'%3E%3Crect width='70' height='70' fill='%238B5CF6' rx='12'/%3E%3Ctext x='35' y='45' fill='white' font-size='16' font-weight='bold' text-anchor='middle' font-family='Arial'%3Eكلاشي%3C/text%3E%3C/svg%3E"/>
+      <square150x150logo src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' fill='%238B5CF6' rx='25'/%3E%3Ctext x='75' y='95' fill='white' font-size='32' font-weight='bold' text-anchor='middle' font-family='Arial'%3Eكلاشي%3C/text%3E%3C/svg%3E"/>
+      <wide310x150logo src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 310 150'%3E%3Crect width='310' height='150' fill='%238B5CF6' rx='20'/%3E%3Ctext x='155' y='95' fill='white' font-size='32' font-weight='bold' text-anchor='middle' font-family='Arial'%3Eكلاشي - السوق الإلكتروني%3C/text%3E%3C/svg%3E"/>
+      <square310x310logo src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 310 310'%3E%3Crect width='310' height='310' fill='%238B5CF6' rx='52'/%3E%3Ctext x='155' y='185' fill='white' font-size='48' font-weight='bold' text-anchor='middle' font-family='Arial'%3Eكلاشي%3C/text%3E%3C/svg%3E"/>
+      <TileColor>#8B5CF6</TileColor>
+    </tile>
+    <notification>
+      <polling-uri src="https://krarar.github.io/Clashy/notifications.xml"/>
+      <frequency>30</frequency>
+      <cycle>1</cycle>
+    </notification>
+    <badge>
+      <polling-uri src="https://krarar.github.io/Clashy/badge.xml"/>
+      <frequency>60</frequency>
+    </badge>
+  </msapplication>
+</browserconfig>

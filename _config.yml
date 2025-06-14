@@ -1,46 +1,78 @@
-# إعدادات GitHub Pages لتطبيق كلاشي PWA
+# إعدادات GitHub Pages المحدثة لتطبيق كلاشي PWA v3.0
 title: "كلاشي - السوق الإلكتروني الشامل"
-description: "سوق إلكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد - العراق"
+description: "سوق إلكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد - العراق. تطبيق PWA محسن للأجهزة المحمولة."
 url: "https://krarar.github.io"
 baseurl: "/Clashy"
 
-# معلومات التطبيق
+# معلومات التطبيق المحدثة
 lang: ar
 timezone: Asia/Baghdad
 encoding: utf-8
 
-# SEO
+# تحسين SEO
 author:
-  name: "كلاشي"
+  name: "فريق كلاشي"
   email: "info@clashy.iq"
   twitter: "@clashy_iq"
+  phone: "+964-781-379-8636"
 
-# Social Media
+# وسائل التواصل الاجتماعي
 social:
-  name: "كلاشي"
+  name: "كلاشي - السوق الإلكتروني الشامل"
   links:
     - "https://github.com/krarar/Clashy"
     - "https://wa.me/9647813798636"
+    - "https://krarar.github.io/Clashy/"
 
-# PWA Settings
-webmaster_verifications:
-  google: ""
-  bing: ""
+# تحسين PWA
+pwa:
+  name: "كلاشي"
+  short_name: "كلاشي"
+  description: "السوق الإلكتروني الشامل"
+  theme_color: "#8B5CF6"
+  background_color: "#0F172A"
+  display: "standalone"
+  start_url: "/Clashy/"
+  scope: "/Clashy/"
+  orientation: "portrait-primary"
+  categories: ["shopping", "business", "lifestyle", "productivity"]
 
-# GitHub Pages Settings
+# إعدادات GitHub Pages
 plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-redirect-from
+  - jekyll-compress-images
 
-# Include/Exclude
+# تحسين الأداء
+compress_html:
+  clippings: all
+  comments: all
+  endings: html
+  ignore:
+    envs: development
+  blanklines: false
+  profile: false
+  startings: [html, head, body]
+
+# إعدادات الصور
+compress_images:
+  enabled: true
+  quality: 85
+  formats: [webp, jpg, png]
+
+# Include/Exclude files
 include:
   - manifest.json
   - sw.js
+  - offline.html
   - browserconfig.xml
   - robots.txt
   - sitemap.xml
   - "*.html"
+  - "_redirects"
+  - ".well-known/"
 
 exclude:
   - README.md
@@ -49,15 +81,30 @@ exclude:
   - .github/
   - node_modules/
   - package*.json
+  - yarn.lock
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
+  - .DS_Store
+  - Thumbs.db
 
-# Collections
+# Collections للمحتوى المنظم
 collections:
   stores:
     output: false
+    permalink: /:collection/:name/
   products:
     output: false
+    permalink: /:collection/:name/
+  pages:
+    output: true
+    permalink: /:name/
 
-# Defaults
+# إعدادات افتراضية للصفحات
 defaults:
   - scope:
       path: ""
@@ -66,36 +113,236 @@ defaults:
       layout: "default"
       lang: "ar"
       dir: "rtl"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      lang: "ar"
+      dir: "rtl"
+  - scope:
+      path: ""
+      type: "stores"
+    values:
+      layout: "store"
+  - scope:
+      path: ""
+      type: "products"
+    values:
+      layout: "product"
 
-# Build Settings
+# Build settings
 markdown: kramdown
 highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Sass settings
 sass:
   style: compressed
+  sass_dir: _sass
 
-# GitHub Pages Specific
+# GitHub Pages specific
 github: [metadata]
 repository: krarar/Clashy
+branch: main
 
-# Performance
-compress_html:
-  clippings: all
-  comments: all
-  blanklines: false
+# Performance optimization
+future: false
+unpublished: false
+limit_posts: 0
 
-# Security Headers (via GitHub Pages)
+# Security headers configuration
 strict_transport_security: true
-content_security_policy: "default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; img-src 'self' data: https:; font-src 'self' https: data:;"
+content_security_policy: "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; img-src 'self' data: https: blob: via.placeholder.com *.supabase.co; font-src 'self' https: data: fonts.googleapis.com fonts.gstatic.com; connect-src 'self' https: wss: *.supabase.co; frame-src 'none';"
 
-# Analytics (يمكن إضافة Google Analytics لاحقاً)
+# Analytics (يمكن تفعيله لاحقاً)
 google_analytics: ""
+google_site_verification: ""
 
-# PWA Specific
-pwa:
-  name: "كلاشي"
+# Search Engine Optimization
+seo:
+  keywords: "كلاشي، تسوق، متاجر، منتجات، العراق، PWA، سوق الكتروني، محلات الحجامي، مكتب الغدير، هواتف، منسوجات، اكسسوارات"
+  author: "فريق كلاشي"
+  image: "https://via.placeholder.com/1200x630/8B5CF6/white?text=كلاشي+-+السوق+الإلكتروني+الشامل"
+
+# Open Graph defaults
+og_defaults:
+  type: "website"
+  locale: "ar_IQ"
+  site_name: "كلاشي"
+
+# Twitter Card defaults
+twitter_defaults:
+  card: "summary_large_image"
+  site: "@clashy_iq"
+
+# Feed settings
+feed:
+  excerpt_only: true
+  posts_limit: 20
+
+# Pagination
+paginate: 10
+paginate_path: "/page:num/"
+
+# تحسين عناوين URL
+permalink: pretty
+
+# إعدادات التطوير
+livereload: true
+incremental: true
+
+# تحسين الفهرسة
+plugins_dir: _plugins
+
+# معالجة الأخطاء
+show_drafts: false
+show_dir_listing: false
+
+# إعدادات اللغة والمنطقة
+locale: "ar_IQ"
+language: "ar"
+
+# إعدادات PWA متقدمة
+webmanifest:
+  name: "كلاشي - السوق الإلكتروني الشامل"
   short_name: "كلاشي"
-  description: "السوق الإلكتروني الشامل"
+  description: "سوق إلكتروني شامل يجمع أفضل المتاجر والمنتجات في مكان واحد - العراق"
+  display: "standalone"
+  orientation: "portrait-primary"
   theme_color: "#8B5CF6"
   background_color: "#0F172A"
-  display: "standalone"
-  start_url: "/"
+  start_url: "/Clashy/"
+  scope: "/Clashy/"
+  lang: "ar"
+  dir: "rtl"
+
+# إعدادات Service Worker
+service_worker:
+  cache_version: "v3.0.0"
+  cache_name: "clashy-pwa"
+  precache_urls:
+    - "/Clashy/"
+    - "/Clashy/index.html"
+    - "/Clashy/alhajami.html"
+    - "/Clashy/Al Ghadeer Office.html"
+    - "/Clashy/offline.html"
+    - "/Clashy/manifest.json"
+
+# إعدادات الأمان
+security:
+  enable_https: true
+  hsts_max_age: 31536000
+  hsts_include_subdomains: true
+  content_type_options: nosniff
+  frame_options: DENY
+  xss_protection: "1; mode=block"
+
+# تحسين الشبكة
+network:
+  preconnect:
+    - "https://fonts.googleapis.com"
+    - "https://fonts.gstatic.com"
+    - "https://cdnjs.cloudflare.com"
+    - "https://cdn.jsdelivr.net"
+  dns_prefetch:
+    - "//fonts.googleapis.com"
+    - "//cdnjs.cloudflare.com"
+    - "//via.placeholder.com"
+
+# إعدادات المحتوى
+content:
+  excerpt_separator: "<!--more-->"
+  post_excerpt_length: 160
+  enable_mathjax: false
+  enable_mermaid: false
+
+# تحسين محركات البحث المحلية
+local_seo:
+  business_name: "كلاشي"
+  business_type: "Electronics Store"
+  address: "بغداد، العراق"
+  phone: "+964-781-379-8636"
+  email: "info@clashy.iq"
+  hours:
+    - "الاثنين-السبت: 9:00-21:00"
+    - "الأحد: 10:00-20:00"
+
+# إعدادات التنبيهات
+notifications:
+  web_push:
+    enabled: false
+    vapid_public_key: ""
+    vapid_private_key: ""
+
+# تحسين الصور
+image_optimization:
+  enabled: true
+  quality: 85
+  progressive: true
+  strip_metadata: true
+  formats: ["webp", "jpg", "png"]
+
+# إعدادات التخزين المؤقت
+caching:
+  max_age: 31536000  # سنة واحدة
+  etag: true
+  last_modified: true
+
+# تحسين الخطوط
+fonts:
+  preload:
+    - "https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800&display=swap"
+  display: "swap"
+
+# إعدادات المراقبة
+monitoring:
+  google_analytics: ""
+  google_tag_manager: ""
+  facebook_pixel: ""
+
+# إعدادات النسخ الاحتياطي
+backup:
+  enabled: false
+  frequency: "daily"
+  retention: 30
+
+# معلومات الترخيص
+license:
+  name: "MIT"
+  url: "https://opensource.org/licenses/MIT"
+
+# معلومات المساهمين
+contributors:
+  - name: "مطور كلاشي"
+    email: "info@clashy.iq"
+    role: "المطور الرئيسي"
+
+# إعدادات API
+api:
+  supabase:
+    url: "https://wgvkbrmcgejscgsyapcs.supabase.co"
+    anon_key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indndmticm1jZ2Vqc2Nnc3lhcGNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1MzgwOTUsImV4cCI6MjA2NTExNDA5NX0.FfODkBYSgTBBkoNP40YixlQphKyrzYbuwqSip7-smuU"
+
+# إعدادات الإصدار
+version:
+  app: "3.0.0"
+  api: "1.0.0"
+  last_updated: "2025-01-15"
+
+# إعدادات التطوير المحلي
+development:
+  host: "localhost"
+  port: 4000
+  livereload_port: 35729
+  show_drafts: true
+  future: true
+
+# إعدادات الإنتاج
+production:
+  minify_html: true
+  minify_css: true
+  minify_js: true
+  optimize_images: true

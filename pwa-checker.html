@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فحص PWA - كلاشي</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: #F1F5F9;
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #8B5CF6, #A855F7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .test-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #8B5CF6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid transparent;
+        }
+
+        .test-item.pass {
+            border-left-color: #10B981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .test-item.fail {
+            border-left-color: #EF4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .test-item.warning {
+            border-left-color: #F59E0B;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .status.pass {
+            background: #10B981;
+            color: white;
+        }
+
+        .status.fail {
+            background: #EF4444;
+            color: white;
+        }
+
+        .status.warning {
+            background: #F59E0B;
+            color: white;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #8B5CF6, #A855F7);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .score {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .score.excellent {
+            color: #10B981;
+        }
+
+        .score.good {
+            color: #F59E0B;
+        }
+
+        .score.poor {
+            color: #EF4444;
+        }
+
+        .details {
+            font-size: 0.9rem;
+            color: #CBD5E1;
+            margin-top: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8B5CF6, #A855F7);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .test-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 فحص PWA - كلاشي</h1>
+        
+        <div class="controls">
+            <button class="btn" onclick="runAllTests()">🚀 بدء الفحص الشامل</button>
+            <button class="btn" onclick="checkManifest()">📄 فحص Manifest</button>
+            <button class="btn" onclick="checkServiceWorker()">⚙️ فحص Service Worker</button>
+            <button class="btn" onclick="exportReport()">📊 تصدير التقرير</button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="score" id="overallScore">
+            جاري الفحص... ⏳
+        </div>
+
+        <!-- PWA Basic Requirements -->
+        <div class="test-section">
+            <h2 class="test-title">
+                <span>📱</span>
+                المتطلبات الأساسية لـ PWA
+            </h2>
+            <div id="basicTests"></div>
+        </div>
+
+        <!-- Manifest Tests -->
+        <div class="test-section">
+            <h2 class="test-title">
+                <span>📄</span>
+                فحص Web App Manifest
+            </h2>
+            <div id="manifestTests"></div>
+        </div>
+
+        <!-- Service Worker Tests -->
+        <div class="test-section">
+            <h2 class="test-title">
+                <span>⚙️</span>
+                فحص Service Worker
+            </h2>
+            <div id="serviceWorkerTests"></div>
+        </div>
+
+        <!-- Installation Tests -->
+        <div class="test-section">
+            <h2 class="test-title">
+                <span>💾</span>
+                فحص قابلية التثبيت
+            </h2>
+            <div id="installTests"></div>
+        </div>
+
+        <!-- Performance Tests -->
+        <div class="test-section">
+            <h2 class="test-title">
+                <span>⚡</span>
+                فحص الأداء
+            </h2>
+            <div id="performanceTests"></div>
+        </div>
+
+        <!-- Security Tests -->
+        <div class="test-section">
+            <h2 class="test-title">
+                <span>🔒</span>
+                فحص الأمان
+            </h2>
+            <div id="securityTests"></div>
+        </div>
+    </div>
+
+    <script>
+        let testResults = {};
+        let totalTests = 0;
+        let passedTests = 0;
+
+        // Basic PWA Requirements
+        async function checkBasicRequirements() {
+            const basicTests = [
+                {
+                    name: 'HTTPS Protocol',
+                    test: () => location.protocol === 'https:' || location.hostname === 'localhost',
+                    critical: true
+                },
+                {
+                    name: 'Responsive Design',
+                    test: () => document.querySelector('meta[name="viewport"]') !== null,
+                    critical: true
+                },
+                {
+                    name: 'Manifest File',
+                    test: async () => {
+                        try {
+                            const response = await fetch('/Clashy/manifest.json');
+                            return response.ok;
+                        } catch {
+                            return false;
+                        }
+                    },
+                    critical: true
+                },
+                {
+                    name: 'Service Worker',
+                    test: () => 'serviceWorker' in navigator,
+                    critical: true
+                },
+                {
+                    name: 'Offline Support',
+                    test: async () => {
+                        try {
+                            const registration = await navigator.serviceWorker.getRegistration();
+                            return registration && registration.active;
+                        } catch {
+                            return false;
+                        }
+                    },
+                    critical: false
+                }
+            ];
+
+            return await runTests(basicTests, 'basicTests');
+        }
+
+        // Manifest Tests
+        async function checkManifest() {
+            let manifest = null;
+            
+            try {
+                const response = await fetch('/Clashy/manifest.json');
+                manifest = await response.json();
+            } catch (error) {
+                console.error('Failed to load manifest:', error);
+            }
+
+            const manifestTests = [
+                {
+                    name: 'Manifest Exists',
+                    test: () => manifest !== null,
+                    critical: true
+                },
+                {
+                    name: 'App Name',
+                    test: () => manifest && (manifest.name || manifest.short_name),
+                    critical: true
+                },
+                {
+                    name: 'Start URL',
+                    test: () => manifest && manifest.start_url,
+                    critical: true
+                },
+                {
+                    name: 'Display Mode',
+                    test: () => manifest && manifest.display === 'standalone',
+                    critical: true
+                },
+                {
+                    name: 'Icons (192x192)',
+                    test: () => manifest && manifest.icons && 
+                              manifest.icons.some(icon => icon.sizes.includes('192x192')),
+                    critical: true
+                },
+                {
+                    name: 'Icons (512x512)',
+                    test: () => manifest && manifest.icons && 
+                              manifest.icons.some(icon => icon.sizes.includes('512x512')),
+                    critical: true
+                },
+                {
+                    name: 'Theme Color',
+                    test: () => manifest && manifest.theme_color,
+                    critical: false
+                },
+                {
+                    name: 'Background Color',
+                    test: () => manifest && manifest.background_color,
+                    critical: false
+                },
+                {
+                    name: 'Maskable Icons',
+                    test: () => manifest && manifest.icons && 
+                              manifest.icons.some(icon => icon.purpose && icon.purpose.includes('maskable')),
+                    critical: false
+                },
+                {
+                    name: 'Shortcuts',
+                    test: () => manifest && manifest.shortcuts && manifest.shortcuts.length > 0,
+                    critical: false
+                }
+            ];
+
+            return await runTests(manifestTests, 'manifestTests');
+        }
+
+        // Service Worker Tests
+        async function checkServiceWorker() {
+            const swTests = [
+                {
+                    name: 'Service Worker Support',
+                    test: () => 'serviceWorker' in navigator,
+                    critical: true
+                },
+                {
+                    name: 'Service Worker Registered',
+                    test: async () => {
+                        try {
+                            const registration = await navigator.serviceWorker.getRegistration();
+                            return registration !== undefined;
+                        } catch {
+                            return false;
+                        }
+                    },
+                    critical: true
+                },
+                {
+                    name: 'Service Worker Active',
+                    test: async () => {
+                        try {
+                            const registration = await navigator.serviceWorker.getRegistration();
+                            return registration && registration.active;
+                        } catch {
+                            return false;
+                        }
+                    },
+                    critical: true
+                },
+                {
+                    name: 'Cache API Support',
+                    test: () => 'caches' in window,
+                    critical: true
+                },
+                {
+                    name: 'Cached Resources',
+                    test: async () => {
+                        try {
+                            const cacheNames = await caches.keys();
+                            return cacheNames.length > 0;
+                        } catch {
+                            return false;
+                        }
+                    },
+                    critical: false
+                },
+                {
+                    name: 'Offline Page Cached',
+                    test: async () => {
+                        try {
+                            const cache = await caches.open('clashy-static-v3.0.0');
+                            const response = await cache.match('/Clashy/offline.html');
+                            return response !== undefined;
+                        } catch {
+                            return false;
+                        }
+                    },
+                    critical: false
+                }
+            ];
+
+            return await runTests(swTests, 'serviceWorkerTests');
+        }
+
+        // Installation Tests
+        async function checkInstallation() {
+            const installTests = [
+                {
+                    name: 'Installable (beforeinstallprompt)',
+                    test: () => window.deferredPrompt !== undefined || 
+                               localStorage.getItem('pwa_installable') === 'true',
+                    critical: true
+                },
+                {
+                    name: 'Standalone Mode Detection',
+                    test: () => window.matchMedia('(display-mode: standalone)').matches ||
+                               window.navigator.standalone === true,
+                    critical: false
+                },
+                {
+                    name: 'Add to Home Screen Meta',
+                    test: () => document.querySelector('meta[name="mobile-web-app-capable"]') !== null,
+                    critical: false
+                },
+                {
+                    name: 'Apple Touch Icon',
+                    test: () => document.querySelector('link[rel="apple-touch-icon"]') !== null,
+                    critical: false
+                },
+                {
+                    name: 'Microsoft Tile Config',
+                    test: () => document.querySelector('meta[name="msapplication-TileColor"]') !== null,
+                    critical: false
+                }
+            ];
+
+            return await runTests(installTests, 'installTests');
+        }
+
+        // Performance Tests
+        async function checkPerformance() {
+            const performanceTests = [
+                {
+                    name: 'Page Load Time < 3s',
+                    test: () => {
+                        const navigation = performance.getEntriesByType('navigation')[0];
+                        const loadTime = navigation.loadEventEnd - navigation.loadEventStart;
+                        return loadTime < 3000;
+                    },
+                    critical: false
+                },
+                {
+                    name: 'First Contentful Paint < 1.5s',
+                    test: () => {
+                        const paint = performance.getEntriesByType('paint')
+                                                .find(entry => entry.name === 'first-contentful-paint');
+                        return paint && paint.startTime < 1500;
+                    },
+                    critical: false
+                },
+                {
+                    name: 'Gzip/Brotli Compression',
+                    test: async () => {
+                        try {
+                            const response = await fetch('/Clashy/');
+                            const encoding = response.headers.get('content-encoding');
+                            return encoding && (encoding.includes('gzip') || encoding.includes('br'));
+                        } catch {
+                            return false;
+                        }
+                    },
+                    critical: false
+                },
+                {
+                    name: 'Resource Preloading',
+                    test: () => document.querySelectorAll('link[rel="preload"], link[rel="preconnect"]').length > 0,
+                    critical: false
+                }
+            ];
+
+            return await runTests(performanceTests, 'performanceTests');
+        }
+
+        // Security Tests
+        async function checkSecurity() {
+            const securityTests = [
+                {
+                    name: 'HTTPS Connection',
+                    test: () => location.protocol === 'https:' || location.hostname === 'localhost',
+                    critical: true
+                },
+                {
+                    name: 'Content Security Policy',
+                    test: () => document.querySelector('meta[http-equiv="Content-Security-Policy"]') !== null,
+                    critical: false
+                },
+                {
+                    name: 'No Mixed Content',
+                    test: () => {
+                        const resources = document.querySelectorAll('script[src], link[href], img[src]');
+                        return Array.from(resources).every(resource => {
+                            const url = resource.src || resource.href;
+                            return !url || url.startsWith('https:') || url.startsWith('/') || url.startsWith('./');
+                        });
+                    },
+                    critical: true
+                },
+                {
+                    name: 'Secure Manifest',
+                    test: async () => {
+                        try {
+                            const response = await fetch('/Clashy/manifest.json');
+                            return response.url.startsWith('https:') || location.hostname === 'localhost';
+                        } catch {
+                            return false;
+                        }
+                    },
+                    critical: true
+                }
+            ];
+
+            return await runTests(securityTests, 'securityTests');
+        }
+
+        // Test Runner
+        async function runTests(tests, containerId) {
+            const container = document.getElementById(containerId);
+            const results = [];
+
+            for (const test of tests) {
+                try {
+                    const result = typeof test.test === 'function' ? await test.test() : test.test;
+                    const status = result ? 'pass' : (test.critical ? 'fail' : 'warning');
+                    
+                    results.push({
+                        name: test.name,
+                        status: status,
+                        critical: test.critical
+                    });
+
+                    totalTests++;
+                    if (result) passedTests++;
+
+                    const testElement = document.createElement('div');
+                    testElement.className = `test-item ${status}`;
+                    testElement.innerHTML = `
+                        <div>
+                            <div style="font-weight: 600;">${test.name}</div>
+                            <div class="details">${test.critical ? 'مطلوب أساسي' : 'تحسين مُوصى به'}</div>
+                        </div>
+                        <div class="status ${status}">
+                            ${result ? '✅ نجح' : (test.critical ? '❌ فشل' : '⚠️ تحذير')}
+                        </div>
+                    `;
+                    container.appendChild(testElement);
+
+                } catch (error) {
+                    console.error(`Test failed: ${test.name}`, error);
+                    
+                    results.push({
+                        name: test.name,
+                        status: 'fail',
+                        critical: test.critical
+                    });
+
+                    totalTests++;
+
+                    const testElement = document.createElement('div');
+                    testElement.className = 'test-item fail';
+                    testElement.innerHTML = `
+                        <div>
+                            <div style="font-weight: 600;">${test.name}</div>
+                            <div class="details">خطأ في التشغيل: ${error.message}</div>
+                        </div>
+                        <div class="status fail">❌ خطأ</div>
+                    `;
+                    container.appendChild(testElement);
+                }
+            }
+
+            testResults[containerId] = results;
+            return results;
+        }
+
+        // Run All Tests
+        async function runAllTests() {
+            // Reset counters
+            totalTests = 0;
+            passedTests = 0;
+            testResults = {};
+
+            // Clear previous results
+            ['basicTests', 'manifestTests', 'serviceWorkerTests', 'installTests', 'performanceTests', 'securityTests']
+                .forEach(id => document.getElementById(id).innerHTML = '');
+
+            document.getElementById('overallScore').textContent = 'جاري الفحص... ⏳';
+
+            // Run tests with progress updates
+            const testSuites = [
+                { name: 'Basic Requirements', func: checkBasicRequirements },
+                { name: 'Manifest', func: checkManifest },
+                { name: 'Service Worker', func: checkServiceWorker },
+                { name: 'Installation', func: checkInstallation },
+                { name: 'Performance', func: checkPerformance },
+                { name: 'Security', func: checkSecurity }
+            ];
+
+            for (let i = 0; i < testSuites.length; i++) {
+                await testSuites[i].func();
+                
+                // Update progress
+                const progress = ((i + 1) / testSuites.length) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+                
+                // Small delay for visual feedback
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+
+            // Calculate final score
+            updateOverallScore();
+        }
+
+        // Update Overall Score
+        function updateOverallScore() {
+            const scorePercentage = totalTests > 0 ? (passedTests / totalTests) * 100 : 0;
+            const scoreElement = document.getElementById('overallScore');
+            
+            let scoreClass = 'poor';
+            let scoreText = 'ضعيف';
+            let scoreEmoji = '❌';
+
+            if (scorePercentage >= 90) {
+                scoreClass = 'excellent';
+                scoreText = 'ممتاز';
+                scoreEmoji = '🎉';
+            } else if (scorePercentage >= 70) {
+                scoreClass = 'good';
+                scoreText = 'جيد';
+                scoreEmoji = '✅';
+            } else if (scorePercentage >= 50) {
+                scoreClass = 'warning';
+                scoreText = 'مقبول';
+                scoreEmoji = '⚠️';
+            }
+
+            scoreElement.className = `score ${scoreClass}`;
+            scoreElement.innerHTML = `
+                ${scoreEmoji} النتيجة: ${Math.round(scorePercentage)}% (${passedTests}/${totalTests})
+                <br>
+                <span style="font-size: 1rem; opacity: 0.8;">${scoreText}</span>
+            `;
+        }
+
+        // Export Report
+        function exportReport() {
+            const report = {
+                timestamp: new Date().toISOString(),
+                url: window.location.href,
+                userAgent: navigator.userAgent,
+                score: totalTests > 0 ? Math.round((passedTests / totalTests) * 100) : 0,
+                totalTests: totalTests,
+                passedTests: passedTests,
+                results: testResults
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(report, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", `pwa-report-${new Date().toISOString().split('T')[0]}.json`);
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        // Auto-run tests when page loads
+        window.addEventListener('load', () => {
+            console.log('🔍 PWA Checker loaded - ready to test!');
+            
+            // Check if we should auto-run
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('autorun') === 'true') {
+                setTimeout(runAllTests, 1000);
+            }
+        });
+
+        // Listen for PWA install events
+        window.addEventListener('beforeinstallprompt', (e) => {
+            localStorage.setItem('pwa_installable', 'true');
+            console.log('✅ PWA installable detected');
+        });
+
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('✅ PWA installed successfully');
+        });
+    </script>
+</body>
+</html>

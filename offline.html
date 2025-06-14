@@ -2,12 +2,76 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>كلاشي - غير متصل</title>
+    <meta name="description" content="صفحة عدم الاتصال لتطبيق كلاشي PWA">
     <meta name="theme-color" content="#8B5CF6">
-    <link rel="icon" type="image/png" href="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Icons -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%238B5CF6' rx='8'/%3E%3Ctext x='32' y='42' fill='white' font-size='20' font-weight='bold' text-anchor='middle' font-family='Arial'%3Eكلاشي%3C/text%3E%3C/svg%3E">
     
     <style>
+        :root {
+            --primary: #8B5CF6;
+            --primary-light: #A855F7;
+            --primary-dark: #7C3AED;
+            --secondary: #06B6D4;
+            --success: #10B981;
+            --error: #EF4444;
+            --warning: #F59E0B;
+            
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #CBD5E1;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            
+            --font-sm: 0.8rem;
+            --font-base: 0.9rem;
+            --font-lg: 1rem;
+            --font-xl: 1.1rem;
+            --font-2xl: 1.25rem;
+            --font-3xl: 1.5rem;
+            
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
+            
+            --transition: 0.2s ease-out;
+        }
+
+        /* Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8FAFC;
+            --bg-tertiary: #F1F5F9;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,177 +79,209 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0F172A 0%, #1E293B 25%, #334155 100%);
-            color: #F1F5F9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Arial';
+            background: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             direction: rtl;
             text-align: center;
-            padding: 20px;
+            padding: var(--space-4);
+            font-size: var(--font-base);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: backgroundFlow 15s ease-in-out infinite;
+        }
+
+        @keyframes backgroundFlow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
         }
 
         .offline-container {
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
-            padding: 40px 30px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8) var(--space-6);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .logo {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: var(--radius-xl);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 30px;
-            font-size: 24px;
+            margin: 0 auto var(--space-6);
+            font-size: var(--font-2xl);
             font-weight: 800;
             color: white;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
         }
 
         .offline-icon {
-            font-size: 60px;
-            color: #94A3B8;
-            margin-bottom: 20px;
+            font-size: 4rem;
+            margin-bottom: var(--space-5);
             animation: pulse 2s infinite;
         }
 
+        .offline-icon.connected {
+            color: var(--success);
+        }
+
+        .offline-icon.disconnected {
+            color: var(--error);
+        }
+
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
         }
 
         h1 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            font-size: var(--font-3xl);
+            margin-bottom: var(--space-4);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            font-weight: 700;
         }
 
         .message {
-            font-size: 16px;
-            color: #CBD5E1;
-            margin-bottom: 30px;
+            font-size: var(--font-lg);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-6);
             line-height: 1.6;
+        }
+
+        .status-indicator {
+            padding: var(--space-4);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            margin-bottom: var(--space-6);
+            transition: var(--transition);
+        }
+
+        .status-indicator.online {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+
+        .status-indicator.offline {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: var(--error);
+        }
+
+        .status-text {
+            font-weight: 600;
+            font-size: var(--font-base);
+            margin-bottom: var(--space-2);
+        }
+
+        .status-details {
+            font-size: var(--font-sm);
+            opacity: 0.8;
         }
 
         .offline-actions {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 30px;
+            gap: var(--space-3);
+            margin-bottom: var(--space-8);
         }
 
         .btn {
-            padding: 15px 25px;
+            padding: var(--space-4) var(--space-5);
             border: none;
-            border-radius: 16px;
+            border-radius: var(--radius-xl);
             font-family: inherit;
-            font-size: 16px;
+            font-size: var(--font-base);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: var(--space-2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #F1F5F9;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
-        }
-
-        .connection-status {
-            margin-top: 30px;
-            padding: 15px;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 12px;
-            font-size: 14px;
-            color: #FCA5A5;
-        }
-
-        .connection-status.online {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.3);
-            color: #86EFAC;
-        }
-
-        .features {
-            margin-top: 30px;
-            text-align: right;
-        }
-
-        .features h3 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #E2E8F0;
-        }
-
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .feature-list li {
-            padding: 8px 0;
-            color: #CBD5E1;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .feature-list li::before {
-            content: "✓";
-            color: #10B981;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        @media (max-width: 480px) {
-            .offline-container {
-                padding: 30px 20px;
-                margin: 10px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .message {
-                font-size: 14px;
-            }
-
-            .btn {
-                padding: 12px 20px;
-                font-size: 14px;
-            }
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         .loading-spinner {
@@ -202,129 +298,530 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .features {
+            text-align: right;
+            margin-top: var(--space-8);
+        }
+
+        .features h3 {
+            font-size: var(--font-xl);
+            margin-bottom: var(--space-4);
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            gap: var(--space-3);
+        }
+
+        .feature-item {
+            padding: var(--space-4);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-size: var(--font-sm);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--primary);
+            transform: translateX(-3px);
+        }
+
+        .feature-icon {
+            color: var(--success);
+            font-size: var(--font-lg);
+            min-width: 24px;
+        }
+
+        .connection-test {
+            margin-top: var(--space-6);
+            padding: var(--space-4);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--glass-bg);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin: var(--space-3) 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: var(--radius-full);
+        }
+
+        .retry-counter {
+            font-size: var(--font-sm);
+            color: var(--text-muted);
+            margin-top: var(--space-2);
+        }
+
+        @media (max-width: 768px) {
+            .offline-container {
+                padding: var(--space-6) var(--space-4);
+                margin: var(--space-4);
+            }
+
+            h1 {
+                font-size: var(--font-2xl);
+            }
+
+            .message {
+                font-size: var(--font-base);
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+                font-size: var(--font-xl);
+            }
+
+            .offline-icon {
+                font-size: 3rem;
+            }
+
+            .offline-actions {
+                gap: var(--space-2);
+            }
+
+            .btn {
+                padding: var(--space-3) var(--space-4);
+                font-size: var(--font-sm);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .offline-container {
+                padding: var(--space-5) var(--space-3);
+                margin: var(--space-2);
+            }
+
+            .feature-list {
+                gap: var(--space-2);
+            }
+
+            .feature-item {
+                padding: var(--space-3);
+                font-size: var(--font-xs);
+            }
+        }
+
+        /* Dark/Light theme animations */
+        .theme-transition {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            :root {
+                --glass-bg: rgba(255, 255, 255, 0.2);
+                --glass-border: rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        /* Focus indicators */
+        .btn:focus,
+        button:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
     </style>
 </head>
-<body>
+<body data-theme="dark" class="theme-transition">
     <div class="offline-container">
         <div class="logo">كلاشي</div>
         
-        <div class="offline-icon">🌐</div>
+        <div class="offline-icon disconnected" id="connectionIcon">
+            🌐
+        </div>
         
-        <h1>غير متصل بالإنترنت</h1>
+        <h1 id="pageTitle">غير متصل بالإنترنت</h1>
         
-        <p class="message">
+        <p class="message" id="pageMessage">
             يبدو أنك غير متصل بالإنترنت حالياً. لا تقلق، يمكنك الاستمرار في استخدام التطبيق للتصفح وإدارة المفضلة والسلة.
         </p>
 
-        <div id="connectionStatus" class="connection-status">
-            🔴 غير متصل - يتم التحقق من الاتصال...
+        <div class="status-indicator offline" id="connectionStatus">
+            <div class="status-text" id="statusText">🔴 غير متصل</div>
+            <div class="status-details" id="statusDetails">يتم التحقق من الاتصال تلقائياً...</div>
+        </div>
+
+        <div class="connection-test" id="connectionTest">
+            <div style="text-align: center; margin-bottom: var(--space-3);">
+                <strong>اختبار الاتصال</strong>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="retry-counter" id="retryCounter">المحاولة التالية خلال 5 ثوان...</div>
         </div>
 
         <div class="offline-actions">
-            <button class="btn btn-primary" onclick="checkConnection()">
+            <button class="btn btn-primary" onclick="checkConnection()" id="checkBtn">
                 <span id="checkText">🔄 التحقق من الاتصال</span>
                 <div class="loading-spinner" id="loadingSpinner"></div>
             </button>
             
-            <a href="./" class="btn btn-secondary">
+            <a href="/Clashy/" class="btn btn-secondary">
                 🏠 العودة للرئيسية
             </a>
             
             <button class="btn btn-secondary" onclick="window.location.reload()">
                 🔄 إعادة تحميل الصفحة
             </button>
+
+            <button class="btn btn-secondary" onclick="toggleTheme()">
+                <span id="themeIcon">🌙</span>
+                <span id="themeText">الوضع الفاتح</span>
+            </button>
         </div>
 
         <div class="features">
-            <h3>المميزات المتاحة بدون إنترنت:</h3>
-            <ul class="feature-list">
-                <li>تصفح المنتجات المحفوظة مسبقاً</li>
-                <li>إدارة قائمة المفضلة</li>
-                <li>إدارة سلة التسوق</li>
-                <li>تصفح المتاجر المحفوظة</li>
-                <li>البحث في المحتوى المحفوظ</li>
-            </ul>
+            <h3>🚀 المميزات المتاحة بدون إنترنت:</h3>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>تصفح المنتجات المحفوظة مسبقاً</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>إدارة قائمة المفضلة والسلة</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>تصفح معلومات المتاجر</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>البحث في المحتوى المحفوظ</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>تبديل بين الوضع المظلم والفاتح</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>التطبيق يعمل كما لو كان مثبتاً</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        // ===== Application State =====
         let isOnline = navigator.onLine;
-        
-        function updateConnectionStatus() {
-            const statusElement = document.getElementById('connectionStatus');
-            
-            if (isOnline) {
-                statusElement.className = 'connection-status online';
-                statusElement.innerHTML = '🟢 متصل - يمكنك الآن تصفح جميع المميزات';
-                
-                // إعادة توجيه تلقائي بعد 3 ثوان
-                setTimeout(() => {
-                    window.location.href = './';
-                }, 3000);
-            } else {
-                statusElement.className = 'connection-status';
-                statusElement.innerHTML = '🔴 غير متصل - يتم التحقق من الاتصال...';
-            }
+        let retryCount = 0;
+        let retryInterval;
+        let progressInterval;
+        let nextRetryTime = 5;
+
+        // ===== Initialization =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeOfflinePage();
+        });
+
+        function initializeOfflinePage() {
+            // Load theme
+            const savedTheme = localStorage.getItem('clashy_theme') || 'dark';
+            document.body.setAttribute('data-theme', savedTheme);
+            updateThemeUI();
+
+            // Initialize connection checking
+            updateConnectionStatus();
+            startPeriodicChecking();
+
+            // Set up event listeners
+            setupEventListeners();
+
+            console.log('📱 كلاشي - صفحة عدم الاتصال جاهزة');
         }
 
-        function checkConnection() {
-            const checkText = document.getElementById('checkText');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            
-            checkText.style.display = 'none';
-            loadingSpinner.style.display = 'inline-block';
-            
-            // محاولة جلب ملف صغير للتحقق من الاتصال
-            fetch('./manifest.json?t=' + Date.now(), {
-                method: 'HEAD',
-                cache: 'no-cache'
-            })
-            .then(response => {
-                if (response.ok) {
-                    isOnline = true;
-                    updateConnectionStatus();
-                } else {
-                    throw new Error('No connection');
+        function setupEventListeners() {
+            // Network status events
+            window.addEventListener('online', handleOnline);
+            window.addEventListener('offline', handleOffline);
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    checkConnection();
                 }
-            })
-            .catch(() => {
-                isOnline = false;
-                updateConnectionStatus();
-            })
-            .finally(() => {
-                checkText.style.display = 'inline';
-                loadingSpinner.style.display = 'none';
+                if (e.key === 'Escape') {
+                    window.history.back();
+                }
+                if (e.ctrlKey && e.key === 'r') {
+                    e.preventDefault();
+                    window.location.reload();
+                }
+            });
+
+            // Visibility change - resume checking when page becomes visible
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden && !isOnline) {
+                    checkConnection();
+                }
             });
         }
 
-        // التحقق من الاتصال عند تحميل الصفحة
-        window.addEventListener('load', () => {
-            updateConnectionStatus();
-            
-            // التحقق التلقائي كل 5 ثوان
-            setInterval(checkConnection, 5000);
-        });
+        // ===== Connection Management =====
+        function updateConnectionStatus() {
+            const connectionIcon = document.getElementById('connectionIcon');
+            const connectionStatus = document.getElementById('connectionStatus');
+            const statusText = document.getElementById('statusText');
+            const statusDetails = document.getElementById('statusDetails');
+            const pageTitle = document.getElementById('pageTitle');
+            const pageMessage = document.getElementById('pageMessage');
 
-        // مراقبة تغيير حالة الاتصال
-        window.addEventListener('online', () => {
+            if (isOnline) {
+                connectionIcon.className = 'offline-icon connected';
+                connectionIcon.textContent = '✅';
+                connectionStatus.className = 'status-indicator online';
+                statusText.innerHTML = '🟢 متصل بالإنترنت';
+                statusDetails.textContent = 'يمكنك الآن تصفح جميع المميزات';
+                pageTitle.textContent = 'تم استعادة الاتصال!';
+                pageMessage.textContent = 'عظيم! تم استعادة الاتصال بالإنترنت. سيتم إعادة توجيهك للصفحة الرئيسية خلال ثوانٍ قليلة.';
+
+                // Redirect after 3 seconds
+                setTimeout(() => {
+                    window.location.href = '/Clashy/';
+                }, 3000);
+
+                // Stop checking
+                clearInterval(retryInterval);
+                clearInterval(progressInterval);
+
+            } else {
+                connectionIcon.className = 'offline-icon disconnected';
+                connectionIcon.textContent = '🌐';
+                connectionStatus.className = 'status-indicator offline';
+                statusText.innerHTML = '🔴 غير متصل';
+                statusDetails.textContent = 'يتم التحقق من الاتصال تلقائياً...';
+                pageTitle.textContent = 'غير متصل بالإنترنت';
+                pageMessage.textContent = 'يبدو أنك غير متصل بالإنترنت حالياً. لا تقلق، يمكنك الاستمرار في استخدام التطبيق للتصفح وإدارة المفضلة والسلة.';
+            }
+        }
+
+        async function checkConnection() {
+            const checkBtn = document.getElementById('checkBtn');
+            const checkText = document.getElementById('checkText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+
+            // Update UI
+            checkText.style.display = 'none';
+            loadingSpinner.style.display = 'inline-block';
+            checkBtn.disabled = true;
+
+            try {
+                // Test connection with multiple methods
+                const connectionTests = [
+                    testConnectionMethod1(),
+                    testConnectionMethod2(),
+                    testConnectionMethod3()
+                ];
+
+                const results = await Promise.allSettled(connectionTests);
+                const anySuccess = results.some(result => result.status === 'fulfilled' && result.value);
+
+                isOnline = anySuccess;
+                updateConnectionStatus();
+
+                if (isOnline) {
+                    retryCount = 0;
+                    showSuccessMessage();
+                } else {
+                    retryCount++;
+                    showRetryMessage();
+                }
+
+            } catch (error) {
+                console.error('❌ Connection check failed:', error);
+                isOnline = false;
+                updateConnectionStatus();
+                retryCount++;
+            } finally {
+                // Reset UI
+                checkText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+                checkBtn.disabled = false;
+            }
+        }
+
+        // Connection test methods
+        async function testConnectionMethod1() {
+            const response = await fetch('/Clashy/manifest.json?t=' + Date.now(), {
+                method: 'HEAD',
+                cache: 'no-cache',
+                timeout: 5000
+            });
+            return response.ok;
+        }
+
+        async function testConnectionMethod2() {
+            const response = await fetch('https://www.google.com/favicon.ico?t=' + Date.now(), {
+                method: 'HEAD',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                timeout: 5000
+            });
+            return true; // no-cors always returns opaque response
+        }
+
+        async function testConnectionMethod3() {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(true);
+                img.onerror = () => reject(false);
+                img.src = 'https://via.placeholder.com/1x1.png?t=' + Date.now();
+                
+                setTimeout(() => reject(false), 5000);
+            });
+        }
+
+        function handleOnline() {
+            console.log('🌐 Browser detected online');
             isOnline = true;
             updateConnectionStatus();
-        });
+        }
 
-        window.addEventListener('offline', () => {
+        function handleOffline() {
+            console.log('📱 Browser detected offline');
             isOnline = false;
             updateConnectionStatus();
-        });
+        }
 
-        // تحديث الصفحة عند الضغط على Enter
-        document.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
+        // ===== Periodic Checking =====
+        function startPeriodicChecking() {
+            if (isOnline) return;
+
+            retryInterval = setInterval(() => {
                 checkConnection();
+            }, 10000); // Check every 10 seconds
+
+            startCountdown();
+        }
+
+        function startCountdown() {
+            nextRetryTime = 10;
+            updateCountdown();
+
+            progressInterval = setInterval(() => {
+                nextRetryTime--;
+                updateCountdown();
+
+                if (nextRetryTime <= 0) {
+                    nextRetryTime = 10;
+                    updateProgressBar(0);
+                } else {
+                    updateProgressBar((10 - nextRetryTime) / 10 * 100);
+                }
+            }, 1000);
+        }
+
+        function updateCountdown() {
+            const retryCounter = document.getElementById('retryCounter');
+            if (nextRetryTime > 0) {
+                retryCounter.textContent = `المحاولة التالية خلال ${nextRetryTime} ثوان...`;
+            } else {
+                retryCounter.textContent = 'جاري التحقق...';
             }
+        }
+
+        function updateProgressBar(percentage) {
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = percentage + '%';
+        }
+
+        // ===== Messages =====
+        function showSuccessMessage() {
+            const statusDetails = document.getElementById('statusDetails');
+            statusDetails.textContent = '✅ تم العثور على اتصال مستقر!';
+        }
+
+        function showRetryMessage() {
+            const statusDetails = document.getElementById('statusDetails');
+            statusDetails.textContent = `❌ لا يزال غير متصل (محاولة ${retryCount})`;
+        }
+
+        // ===== Theme Management =====
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('clashy_theme', newTheme);
+            
+            updateThemeUI();
+        }
+
+        function updateThemeUI() {
+            const theme = document.body.getAttribute('data-theme') || 'dark';
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            
+            if (theme === 'dark') {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'الوضع الفاتح';
+            } else {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'الوضع المظلم';
+            }
+        }
+
+        // ===== Page Load Event =====
+        window.addEventListener('load', () => {
+            console.log('📱 صفحة عدم الاتصال محملة بالكامل');
+            
+            // Initial connection check after page loads
+            setTimeout(checkConnection, 1000);
         });
 
-        console.log('📱 كلاشي - صفحة عدم الاتصال جاهزة');
-        console.log('🌐 سيتم التحقق من الاتصال تلقائياً');
+        // ===== Service Worker Communication =====
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'CONNECTIVITY_CHANGED') {
+                    isOnline = event.data.isOnline;
+                    updateConnectionStatus();
+                }
+            });
+        }
+
+        // ===== Cleanup on page unload =====
+        window.addEventListener('beforeunload', () => {
+            clearInterval(retryInterval);
+            clearInterval(progressInterval);
+        });
+
+        console.log('🚀 كلاشي - صفحة عدم الاتصال المحسنة جاهزة!');
+        console.log('🔄 فحص دوري للاتصال كل 10 ثوان');
+        console.log('📱 دعم كامل للوضع المظلم/الفاتح');
+        console.log('⌨️ اختصارات لوحة المفاتيح متاحة');
+        console.log('🎯 تجربة مستخدم محسنة');
     </script>
 </body>
 </html>
