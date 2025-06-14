@@ -1,0 +1,35 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://krarar.github.io/Clashy/sitemap.xml
+
+# Files
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.woff$
+Allow: /*.woff2$
+Allow: /*.ttf$
+Allow: /*.eot$
+
+# PWA Files
+Allow: /manifest.json
+Allow: /sw.js
+Allow: /browserconfig.xml
+
+# Important Pages
+Allow: /index.html
+Allow: /alhajami.html
+Allow: /Al Ghadeer Office.html
+
+# Crawl Delay (optional)
+Crawl-delay: 1
+
+# Host
+Host: https://krarar.github.io/Clashy/
