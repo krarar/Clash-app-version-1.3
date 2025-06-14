@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كلاشي - غير متصل</title>
+    <meta name="theme-color" content="#8B5CF6">
+    <link rel="icon" type="image/png" href="https://wgvkbrmcgejscgsyapcs.supabase.co/storage/v1/object/public/images/Clashy.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 25%, #334155 100%);
+            color: #F1F5F9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            direction: rtl;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .offline-container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .offline-icon {
+            font-size: 60px;
+            color: #94A3B8;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .message {
+            font-size: 16px;
+            color: #CBD5E1;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .offline-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #F1F5F9;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        .connection-status {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            font-size: 14px;
+            color: #FCA5A5;
+        }
+
+        .connection-status.online {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #86EFAC;
+        }
+
+        .features {
+            margin-top: 30px;
+            text-align: right;
+        }
+
+        .features h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #E2E8F0;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            color: #CBD5E1;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: #10B981;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .offline-container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .message {
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="logo">كلاشي</div>
+        
+        <div class="offline-icon">🌐</div>
+        
+        <h1>غير متصل بالإنترنت</h1>
+        
+        <p class="message">
+            يبدو أنك غير متصل بالإنترنت حالياً. لا تقلق، يمكنك الاستمرار في استخدام التطبيق للتصفح وإدارة المفضلة والسلة.
+        </p>
+
+        <div id="connectionStatus" class="connection-status">
+            🔴 غير متصل - يتم التحقق من الاتصال...
+        </div>
+
+        <div class="offline-actions">
+            <button class="btn btn-primary" onclick="checkConnection()">
+                <span id="checkText">🔄 التحقق من الاتصال</span>
+                <div class="loading-spinner" id="loadingSpinner"></div>
+            </button>
+            
+            <a href="./" class="btn btn-secondary">
+                🏠 العودة للرئيسية
+            </a>
+            
+            <button class="btn btn-secondary" onclick="window.location.reload()">
+                🔄 إعادة تحميل الصفحة
+            </button>
+        </div>
+
+        <div class="features">
+            <h3>المميزات المتاحة بدون إنترنت:</h3>
+            <ul class="feature-list">
+                <li>تصفح المنتجات المحفوظة مسبقاً</li>
+                <li>إدارة قائمة المفضلة</li>
+                <li>إدارة سلة التسوق</li>
+                <li>تصفح المتاجر المحفوظة</li>
+                <li>البحث في المحتوى المحفوظ</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let isOnline = navigator.onLine;
+        
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connectionStatus');
+            
+            if (isOnline) {
+                statusElement.className = 'connection-status online';
+                statusElement.innerHTML = '🟢 متصل - يمكنك الآن تصفح جميع المميزات';
+                
+                // إعادة توجيه تلقائي بعد 3 ثوان
+                setTimeout(() => {
+                    window.location.href = './';
+                }, 3000);
+            } else {
+                statusElement.className = 'connection-status';
+                statusElement.innerHTML = '🔴 غير متصل - يتم التحقق من الاتصال...';
+            }
+        }
+
+        function checkConnection() {
+            const checkText = document.getElementById('checkText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            checkText.style.display = 'none';
+            loadingSpinner.style.display = 'inline-block';
+            
+            // محاولة جلب ملف صغير للتحقق من الاتصال
+            fetch('./manifest.json?t=' + Date.now(), {
+                method: 'HEAD',
+                cache: 'no-cache'
+            })
+            .then(response => {
+                if (response.ok) {
+                    isOnline = true;
+                    updateConnectionStatus();
+                } else {
+                    throw new Error('No connection');
+                }
+            })
+            .catch(() => {
+                isOnline = false;
+                updateConnectionStatus();
+            })
+            .finally(() => {
+                checkText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+            });
+        }
+
+        // التحقق من الاتصال عند تحميل الصفحة
+        window.addEventListener('load', () => {
+            updateConnectionStatus();
+            
+            // التحقق التلقائي كل 5 ثوان
+            setInterval(checkConnection, 5000);
+        });
+
+        // مراقبة تغيير حالة الاتصال
+        window.addEventListener('online', () => {
+            isOnline = true;
+            updateConnectionStatus();
+        });
+
+        window.addEventListener('offline', () => {
+            isOnline = false;
+            updateConnectionStatus();
+        });
+
+        // تحديث الصفحة عند الضغط على Enter
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkConnection();
+            }
+        });
+
+        console.log('📱 كلاشي - صفحة عدم الاتصال جاهزة');
+        console.log('🌐 سيتم التحقق من الاتصال تلقائياً');
+    </script>
+</body>
+</html>
